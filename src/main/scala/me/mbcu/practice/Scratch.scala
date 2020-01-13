@@ -1,7 +1,10 @@
 package me.mbcu.practice
 
+import scala.collection.mutable.ListBuffer
+
 object Scratch extends App{
 
-  val x = List("a", "b", "c", "a d").filter(_.contains("b"))
-  println(x)
+
+
+
 }
