@@ -4,10 +4,32 @@
 - the min requirement to generate bytecode (.class) is a class
 - top level class cannot have static or protected
 - a class without main method can be compiled but cannot be executed (no main method error)
-- `import static`
+- `import static` not static import
+- static instantiation 
+``` 
+class AAA {
+
+  public void main (String[] args) {
+     System.out.println("Two")
+  }
+
+  static {
+    System.out.println("One")
+  }
+
+  static {
+    System.out.println("Two")
+  }
+
+  {System.out.println("Only when this class is instantiated")}
+}
+
+```
 
 ## Data Types
 - `_` can be used in literal numbers with exceptions: the beginning or end, next to decimal point, before l, d, or f 
+- floating point doesn't throw ArithmeticException when divided by zero, it only results in NaN
+- `Double.isNan(double)` or `Double.isNan()` on the value
 - Integer `new Integer(string or int)`
 - Integer Integer.`decode(string)` (can accept hex) 
 - Integer Integer.`valueOf(string)`
@@ -39,6 +61,22 @@ class B implemetns A {
 
 ```
 - String cannot be converted to Character, Character only has `valueOf(char)`
+- `int` can be set with
+```
+// Decimal declaration and possible chars are [0-9]
+int decimal    =  495;        
+
+// HexaDecimal declaration starts with 0X or 0x and possible chars are [0-9A-Fa-f]
+int hexa       =  0X1EF; 
+
+// Octal declaration starts with 0 and possible chars are [0-7] 
+int octal      =  0757;  
+
+// Binary representation starts with 0B or 0b and possible chars are [0-1]  
+int binary     =  0b111101111; 
+```
+- char can be passed to `method(int)` but int cannot be passed to `method(char)`
+- `int a = 'c'` and `char a = 1` are ok
 
 ## Operators and Decision Construct
 - ++x and x++
@@ -60,7 +98,7 @@ int x;
 x = 1;
 
 switch (i) {
-  case x : // wont compile
+  case x : // wont compile because x is assigned later so it's not compile time constant
 }
 
 final x = 1;
@@ -95,6 +133,12 @@ a == c // false
 - array of chars can be filled with int
 - Arrays.sort(array, start, end) partially sorts an array between start and end
 - array size cannot be long
+- 
+``` 
+String[][] sss = {{"a","b"}, {"c"}};
+System.out.println(sss[1][1]); // ArrayIndexOutOfBoundsException 
+```
+- Arrays.sort only takes in single array parameter where each element can be turned into Comparable, if the input is a multi-array then it casting an array to Comparable will cause ClassCastException
 
 ## Loop Constructs
 - `Object List.remove(index)` starts from the first
@@ -112,7 +156,33 @@ while (x > 0) {
 ```
 - `while(false)` will return compilation error unreachable statement
 - break to outer loop will also end the inner loop
+- see the difference between shadowing and normal 
+``` 
+    static int i = 10;
+    public static void main(String[] args) {
 
+        for (int i = 1; i < 3; i++) { // shadowing
+            System.out.print(i);
+        }
+        System.out.print(i); // 1210
+    }
+
+    static int i = 10;
+    public static void main(String[] args) {
+
+        for (i = 1; i < 3; i++) {// this is not shadowing
+            System.out.print(i);
+        }
+        System.out.print(i); //123
+
+    }
+```
+- there's no difference between `for (int i = 1; i < 3; ++i) ` and `for (int i = 1; i < 3; i++)`
+- for structure is `for(init, booleanCondition, update)`, all optional
+``` 
+for (int x =10, y =6; y < x; System.out.print(x--)) { // valid
+```
+- any statement after continue or break will cause compiler error Unreachable statement
 
 
 ## Inheritance, Interface
@@ -151,8 +221,35 @@ public class ClassCastExceptionDemo
 }
 
 ```
+- static methods cannot be overriden but subclass can have a method with a same signature, in this case it is treated as usual class method. 
+- static loading
+``` 
+class Person{
+    Person {
+       System.out.print("First");
+    }
 
-##
+    static {
+        System.out.print("Second");
+    }
+}
+
+class Manager extends Person {
+    Manager{
+        super()
+         System.out.print("Fourth");
+    }
+    {System.out.print("Third");}
+
+    
+}
+...
+Person p = new Manager();
+```
+- overriding method can have final modifier
+- if a class implements two interfaces that have the same default method (name and signature) then compiler will throw an error EXCEPT if the class overrides the duplicate methods
+
+## Working with Methods and Encapsulation
 - pass by value
 ```
 the original primitive will not change (String is NOT primitive)
@@ -222,6 +319,8 @@ won't work
 - `finally` without catch is legal
 - All exceptions are checked exceptions, except for those indicated by Error, RuntimeException, and their subclasses.
 - Errors and runtime exceptions are collectively known as unchecked exceptions.
+- Throwable has two subclasses : Exception and Error (unchecked)
+- SecurityException is not checked exception so no need to handle it in the calling method
 
 ## Java API
 - StringBuilder initial capacity is initial content + 16, unless explicitly declared in constructor
@@ -263,5 +362,12 @@ Year y = Year.of(2015)
 LocalDate l = y.atMonthDay(MonthDay.of(4,31))
 // exception because April 31st doesn't exist
 ```
+- StringBuilder.inser(pos, el) with pos outside length will cause StringIndexArrayOutOfBoundExeption
+- String.indexOf doesn't take in CharSequence
+- String implements Comparable interface which can be used for .equals test
 
-
+## Qs
+- new array with non int size
+- int like 056
+- what if interfaces have same default methods
+- which comes first, constructor or static init
