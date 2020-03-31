@@ -25,6 +25,9 @@ class AAA {
 }
 
 ```
+- System.out.print() does not exist, print must have an argument
+- import com.foo.* doesn't include packages from com.foo.bar.* and other subpackages
+
 
 ## Data Types
 - `_` can be used in literal numbers with exceptions: the beginning or end, next to decimal point, before l, d, or f 
@@ -34,10 +37,12 @@ class AAA {
 - Integer Integer.`decode(string)` (can accept hex) 
 - Integer Integer.`valueOf(string)`
 - int Integer.`parseInt(String)` 
+- by default `1.3` is a double, assigning it to float will cause type match error
 - final can be init once, doesn't have to be in the same line
 - local method variable has to be init before used, but it's not illegal to decalare it without value
 - new Boolean("true") for true, new Boolean("anything else but not null") for false (this constructor is deprecated after 9)
 - Double + null = null pointer exception
+- `int x, y = 100` only initializes y
 - short
 ``` 
 short sh = 10;
@@ -94,7 +99,7 @@ int binary     =  0b111101111;
 - `x =- 2` is `x = -2`
 - case in switch-case cannot take compile time constant
 ``` 
-int x;
+final int x;
 x = 1;
 
 switch (i) {
@@ -107,6 +112,7 @@ switch (i) {
 }
 
 ```
+- case has to refer to a constant value a.k.a final 
 - `if` and `else if` will execute if condition is true, also if can take in assignment 
 ``` 
 if (x = false) // this is valid 
@@ -116,6 +122,7 @@ if (x = false) // this is valid
 ``` 
 System.out.print("a = " + 9 + 3) // a = 93
 System.out.print("a = " + (9 + 3) // a = 12
+System.out.print(9 + 3 + " a") // ! 12 a
 ```
 - String equal
 ``` 
@@ -139,6 +146,9 @@ String[][] sss = {{"a","b"}, {"c"}};
 System.out.println(sss[1][1]); // ArrayIndexOutOfBoundsException 
 ```
 - Arrays.sort only takes in single array parameter where each element can be turned into Comparable, if the input is a multi-array then it casting an array to Comparable will cause ClassCastException
+- Array.sort on String natural order would be : `number -> uppercase letters -> lowercase letters`
+- Arrays.deepEquals(Object[], Object[]) is like Arrays.equals in that it tests if two arrays are equals but works on multi-dimensional arrays. 
+
 
 ## Loop Constructs
 - `Object List.remove(index)` starts from the first
@@ -156,6 +166,26 @@ while (x > 0) {
 ```
 - `while(false)` will return compilation error unreachable statement
 - break to outer loop will also end the inner loop
+- break without label in inner loop will only break that inner loop
+- break vs continue with label
+``` 
+ Label: for (...){
+     for(...) {
+        break or continue Label;
+     }
+ }
+ break will exit after the loop
+ continue will exit at the beginning, continuing to next iteration
+```
+- for loop form
+``` 
+for (int i=0; i <5; i++, System.out.println(i));
+// 1 2 3 4 5
+```
+- for loop invalid form
+```
+for (int i = 0, int j = 5; i < k; i++) // int data type can only be declared once
+```
 - see the difference between shadowing and normal 
 ``` 
     static int i = 10;
@@ -248,6 +278,21 @@ Person p = new Manager();
 ```
 - overriding method can have final modifier
 - if a class implements two interfaces that have the same default method (name and signature) then compiler will throw an error EXCEPT if the class overrides the duplicate methods
+- order of initiation
+``` 
+- superclass
+- static variables and static initializers from top
+- instance variables and instance initializers from top
+- constructor
+```
+- overriding method can have different return type as long as it's a subtype
+``` 
+super: Object method()
+sub: String method()
+```
+- overriding method cannot throw a checked exception with broader scope that its parent
+
+
 
 ## Working with Methods and Encapsulation
 - pass by value
@@ -277,6 +322,15 @@ private void change(int[] t){
   }
 
   change((char)3);
+```
+
+## Handling Exceptions
+- method can throw a superclass of exception that the content throws
+``` 
+void method() throws IOException{
+  throw new FileNotFoundException(); // because this is a subclass of IOException
+ // but the calling method will still catch FileNotFoundException is such block exists
+}
 ```
 - multi exceptions
 ```
@@ -321,6 +375,12 @@ won't work
 - Errors and runtime exceptions are collectively known as unchecked exceptions.
 - Throwable has two subclasses : Exception and Error (unchecked)
 - SecurityException is not checked exception so no need to handle it in the calling method
+- main method has two kinds of signature, either can be final
+``` 
+static void main(String[] args)
+static void main(String...args)
+```
+
 
 ## Java API
 - StringBuilder initial capacity is initial content + 16, unless explicitly declared in constructor
@@ -365,9 +425,16 @@ LocalDate l = y.atMonthDay(MonthDay.of(4,31))
 - StringBuilder.inser(pos, el) with pos outside length will cause StringIndexArrayOutOfBoundExeption
 - String.indexOf doesn't take in CharSequence
 - String implements Comparable interface which can be used for .equals test
+- LocalDate is immutable so `LocalDate.ofYearDay(2015,363).plusWeeks(2)` won't add weeks. 
+- String doesn't have any method that affects the string it's invoked on
 
 ## Qs
 - new array with non int size
 - int like 056
 - what if interfaces have same default methods
 - which comes first, constructor or static init
+- what if a class and its subclass implement a same interface that has a method, which one wins the implemented method or override method
+
+## Easy misses
+- else() doesn't exist
+- variables with the same name in the same method

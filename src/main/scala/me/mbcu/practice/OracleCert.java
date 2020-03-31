@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
+
 import static java.time.LocalDate.*;
 
 abstract class Writer {public static void write() {System.out.println("Writing...");}}
@@ -17,14 +18,22 @@ class SuperClass {SuperClass(int x) {System.out.println("Super");}}
 
 public class OracleCert extends Writer{
 
+    static {
+        System.out.println("a");
+    }
+
     public static void write() {System.out.println("Writing code");}
         static Integer in;
 
     public static void main(String[] args) {
 
-            for (int i = 5, j = 0; i > 0; i--, j++){
-                System.out.println(i + " " + j);
-            }
+
+    }
+
+    static void print(){
+
+        
+
     }
 
 
