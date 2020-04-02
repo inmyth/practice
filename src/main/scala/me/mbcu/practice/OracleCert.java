@@ -1,5 +1,6 @@
 package me.mbcu.practice;
 
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Period;
@@ -17,28 +18,46 @@ class SuperClass {SuperClass(int x) {System.out.println("Super");}}
 
 
 public class OracleCert extends Writer{
+    static int y = 10;
+    int yy;
 
-    static {
-        System.out.println("a");
-    }
 
-    public static void write() {System.out.println("Writing code");}
+
+    public static void ae() throws FileNotFoundException {System.out.println("Writing code");}
+
+    public static void write(){System.out.println("Writing code");}
         static Integer in;
 
     public static void main(String[] args) {
+        int i = 3, j =2;
+        System.out.println(i-- + --j);
 
+        A xx = new B();
+        xx.method();
 
+        System.out.println(new OracleCert().yy);
+
+        System.out.println(div(20,2));
+        int in =6;
+        nom(in);
+        System.out.println(in);
+
+        int[] ar= {1,2,3};
+        cha(ar);
+        System.out.println(Arrays.toString(ar));
     }
 
-    static void print(){
-
-        
-
+    static double div(int i, int j){
+        return i/j;
     }
 
+    static void nom(int i){
+        i = 2;
+    }
 
-
-
+    static void cha(int[] i){
+        i[0] = 2;
+    }
 }
 
 class A {
@@ -70,7 +89,9 @@ interface AAA {
 
 }
 
-interface BBB extends AAA {
+abstract interface BBB extends AAA {
+    static final int a = 1;
+
     @Override
     default String print() {
         return "bbb";
@@ -82,6 +103,10 @@ interface BBB extends AAA {
     public void print(){
 
     };
+
+     int  other(){
+        return 1;
+    }
 }
 
 class CC extends BB {
@@ -89,6 +114,11 @@ class CC extends BB {
     @Override
     public void print() {
 
+    }
+
+    @Override
+    int other(){
+        return 2;
     }
 }
 

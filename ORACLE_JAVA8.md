@@ -27,7 +27,15 @@ class AAA {
 ```
 - System.out.print() does not exist, print must have an argument
 - import com.foo.* doesn't include packages from com.foo.bar.* and other subpackages
-
+- fully qualified name means `class AA extends Java.util.Date ` without import
+- padding format
+``` 
+    int a = 808;
+    System.out.format("%05d", a);
+    // 00808
+    System.out.format("%02d", a);
+    // 808
+```
 
 ## Data Types
 - `_` can be used in literal numbers with exceptions: the beginning or end, next to decimal point, before l, d, or f 
@@ -213,7 +221,26 @@ for (int i = 0, int j = 5; i < k; i++) // int data type can only be declared onc
 for (int x =10, y =6; y < x; System.out.print(x--)) { // valid
 ```
 - any statement after continue or break will cause compiler error Unreachable statement
+- multi-dimensional array initialization
+``` 
+    int[][] ints = new int[3][2];
+    ints[0][3] = 1 // doesn't work
+    ints[2] = new int[]{1, 2, 3, 4, 4}; // this works
+    ints[3] = new int[]{1,2}; // this doesn't work
 
+    int[][] ccc = new int[][2]; // doesn't work
+```
+
+## Using operators and decision constructs
+- increment tricks
+``` 
+int i = 3, j =2;
+System.out.println(i-- + --j + ++i); 
+// the first i-- is evaluated before the second operand so output is 7
+int i = 3, j =2;
+System.out.println(i-- + --j);
+// in this case it's 4 
+```
 
 ## Inheritance, Interface
 
@@ -280,8 +307,8 @@ Person p = new Manager();
 - if a class implements two interfaces that have the same default method (name and signature) then compiler will throw an error EXCEPT if the class overrides the duplicate methods
 - order of initiation
 ``` 
-- superclass
-- static variables and static initializers from top
+- static variables and static initializers from top, this happend on class loader
+- superclass constructors
 - instance variables and instance initializers from top
 - constructor
 ```
@@ -291,8 +318,32 @@ super: Object method()
 sub: String method()
 ```
 - overriding method cannot throw a checked exception with broader scope that its parent
+- interface can have modifier `abstract`
+- interface variables are implicitly `public static final`
+- subclass can have a method with the same signature with a private method in superclass, but it's not override
+- invoking a method on superclass will call its overriden method regardless of reference
+``` 
+class A {
+  
+  int bla(){
+    return 1;
+  }
+}
 
+class B extends A {
+  int bla() {
+    return 2;
+  }
+}
+...
 
+A xx = new B();
+A.bla(); // 2
+``` 
+- inner class cannot have static declaration
+- the only way a class with private constructor can be extended is when the subclass is its inner class
+- overloaded method needs to change its arguments (type, order, or more arguments)
+- overloaded method cannot change its return type, it can do so only if the args also change 
 
 ## Working with Methods and Encapsulation
 - pass by value
@@ -322,6 +373,25 @@ private void change(int[] t){
   }
 
   change((char)3);
+```
+- final instance variable doesn't have default value and has to be initialized 
+- `method(short)` cannot take in literal
+``` 
+void method(short){}
+...
+method(10); // error
+method((short)10); //ok
+short x = 10;
+method(x); //ok
+```
+- `double d = 5` is widening conversion from int, and it never loses precision
+- method implicitly converts 
+``` 
+ double div(int i, int j){
+   return i/j;
+ }
+
+ div(20,2) // 10.0
 ```
 
 ## Handling Exceptions
@@ -380,6 +450,7 @@ won't work
 static void main(String[] args)
 static void main(String...args)
 ```
+- if a method throws an exception then the calling method must handle it 
 
 
 ## Java API
@@ -427,6 +498,9 @@ LocalDate l = y.atMonthDay(MonthDay.of(4,31))
 - String implements Comparable interface which can be used for .equals test
 - LocalDate is immutable so `LocalDate.ofYearDay(2015,363).plusWeeks(2)` won't add weeks. 
 - String doesn't have any method that affects the string it's invoked on
+- String has join method after Java 8
+- ArrayList.retainAll removes all elements that other list has
+- ArrayList.add(index , el) inserts an el, ArrayList.set(index, el) replaces it
 
 ## Qs
 - new array with non int size
@@ -434,6 +508,7 @@ LocalDate l = y.atMonthDay(MonthDay.of(4,31))
 - what if interfaces have same default methods
 - which comes first, constructor or static init
 - what if a class and its subclass implement a same interface that has a method, which one wins the implemented method or override method
+
 
 ## Easy misses
 - else() doesn't exist
