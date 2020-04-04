@@ -1,6 +1,8 @@
 package me.mbcu.practice;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Period;
@@ -18,33 +20,33 @@ class SuperClass {SuperClass(int x) {System.out.println("Super");}}
 
 
 public class OracleCert extends Writer{
-    static int y = 10;
+//    static int y = 10;
     int yy;
+       static Integer va;
 
 
-
-    public static void ae() throws FileNotFoundException {System.out.println("Writing code");}
+    public static void ae() throws NullPointerException {
+        throw new NullPointerException();
+    }
 
     public static void write(){System.out.println("Writing code");}
         static Integer in;
+    public static void main(String args[]) {
 
-    public static void main(String[] args) {
-        int i = 3, j =2;
-        System.out.println(i-- + --j);
+        String[] a = {"A", "a", "3", "$", "."};
+        Arrays.sort(a);
+        System.out.println(Arrays.toString(a));
 
-        A xx = new B();
-        xx.method();
+        int[] aaa= new int[0];
 
-        System.out.println(new OracleCert().yy);
+        StringBuilder sb = new StringBuilder("Whiz");
+        sb.delete(5,7);
+        System.out.println(sb);
 
-        System.out.println(div(20,2));
-        int in =6;
-        nom(in);
-        System.out.println(in);
+    }
 
-        int[] ar= {1,2,3};
-        cha(ar);
-        System.out.println(Arrays.toString(ar));
+    static void dob(Double s){
+
     }
 
     static double div(int i, int j){
@@ -62,14 +64,22 @@ public class OracleCert extends Writer{
 
 class A {
 
-    static void method(){
+    A( ){
+        System.out.println("Constructor A");
+    }
+
+     void method() throws  IOException{
         System.out.print("A");
     }
 
 }
 
 class B extends A {
-    static void method(){
+
+    B(){
+        super();
+    }
+     void method() throws FileNotFoundException{
         System.out.print("B");
     }
 
@@ -87,7 +97,10 @@ interface AAA {
          return "aaa";
     }
 
+    public void par();
+
 }
+
 
 abstract interface BBB extends AAA {
     static final int a = 1;
@@ -104,7 +117,7 @@ abstract interface BBB extends AAA {
 
     };
 
-     int  other(){
+     int  other() throws Exception{
         return 1;
     }
 }
@@ -117,7 +130,7 @@ class CC extends BB {
     }
 
     @Override
-    int other(){
+    int other() throws FileNotFoundException{
         return 2;
     }
 }
@@ -138,3 +151,4 @@ class Employee extends Person{
 
     Employee(){this("Kent");}
 }
+

@@ -36,10 +36,12 @@ class AAA {
     System.out.format("%02d", a);
     // 808
 ```
+- _ and $ are legal identifiers
+- high cohesion means a class is focused which is good
 
 ## Data Types
 - `_` can be used in literal numbers with exceptions: the beginning or end, next to decimal point, before l, d, or f 
-- floating point doesn't throw ArithmeticException when divided by zero, it only results in NaN
+- floating point doesn't throw ArithmeticException when divided by zero, it only results in infinity
 - `Double.isNan(double)` or `Double.isNan()` on the value
 - Integer `new Integer(string or int)`
 - Integer Integer.`decode(string)` (can accept hex) 
@@ -50,6 +52,7 @@ class AAA {
 - local method variable has to be init before used, but it's not illegal to decalare it without value
 - new Boolean("true") for true, new Boolean("anything else but not null") for false (this constructor is deprecated after 9)
 - Double + null = null pointer exception
+- Integer.BYTES = 4, Integer.SIZE = 32 (or the bits representation of BYTES )
 - `int x, y = 100` only initializes y
 - short
 ``` 
@@ -73,7 +76,7 @@ class B implemetns A {
 }
 
 ```
-- String cannot be converted to Character, Character only has `valueOf(char)`
+- String cannot be converted to Character object, Character only has `valueOf(char)`
 - `int` can be set with
 ```
 // Decimal declaration and possible chars are [0-9]
@@ -90,6 +93,57 @@ int binary     =  0b111101111;
 ```
 - char can be passed to `method(int)` but int cannot be passed to `method(char)`
 - `int a = 'c'` and `char a = 1` are ok
+- widening means a type of lower length can be passed to method that takes type with longer length
+``` 
+short a = 1;
+method(int x)
+method(a) // works
+```
+- wrapper with wrapper arguments cannot do widening
+``` 
+Float f = 1.0f;
+method(Double x)
+method(f) //fails
+```
+- if two types are compared than one is widened 
+``` 
+double d = 10;
+short s  = 3;
+d == s // means s will be widened to double
+```
+- autobox equality will use the wrapper's valueOf
+``` 
+Integer a = 127;
+Integer b = 127;
+a == b // true -128 to 127 will return false for anything else
+
+```
+- long can be implicitly cast
+``` 
+long l = 13
+```
+- float cannot be implicitly cast
+```
+float f = 13.2; // error
+```
+- if int and float are compared, int will be cast to float
+``` 
+float f = 12.3f;
+System.out.println(++f);
+f+=0.7;
+long l = 14;
+System.out.println(f == l); // true
+
+``` 
+- String cannot be cast to int, this will cause failed compilation
+- & checks both operands, && checks first operand, if it fails then it won't process to the second
+- 
+``` 
+exprA | exprB <-- this means evaluate exprA then evaluate exprB then do the |.
+
+exprA || exprB <-- this means evaluate exprA and only if this is false then evaluate exprB and do the ||
+```
+- enum constructor can only be default or private 
 
 ## Operators and Decision Construct
 - ++x and x++
@@ -142,8 +196,20 @@ a.equals(b) // true
 
 String c = new String("xx") 
 a == c // false
-
 ```
+- the result of modulo a%b will always take the sign of a, it doesn't matter if b is negative or positive
+- be careful of if construct
+``` 
+if(y++ ==10);
+else y*=2;
+// this works because it's equivalent to this
+if(y++ ==10)   
+      ;
+else
+  y*=2;
+    
+```
+
 ## Array
 - array of chars can be filled with int
 - Arrays.sort(array, start, end) partially sorts an array between start and end
@@ -156,7 +222,22 @@ System.out.println(sss[1][1]); // ArrayIndexOutOfBoundsException
 - Arrays.sort only takes in single array parameter where each element can be turned into Comparable, if the input is a multi-array then it casting an array to Comparable will cause ClassCastException
 - Array.sort on String natural order would be : `number -> uppercase letters -> lowercase letters`
 - Arrays.deepEquals(Object[], Object[]) is like Arrays.equals in that it tests if two arrays are equals but works on multi-dimensional arrays. 
+- array constant assignment won't work
+``` 
+int[] a;
+a = {1,2,3} 
+// wont work
 
+```
+- multi-dimensional array initialization
+``` 
+    int[][] ints = new int[3][2];
+    ints[0][3] = 1 // doesn't work
+    ints[2] = new int[]{1, 2, 3, 4, 4}; // this works
+    ints[3] = new int[]{1,2}; // this doesn't work
+
+    int[][] ccc = new int[][2]; // doesn't work
+```
 
 ## Loop Constructs
 - `Object List.remove(index)` starts from the first
@@ -221,15 +302,8 @@ for (int i = 0, int j = 5; i < k; i++) // int data type can only be declared onc
 for (int x =10, y =6; y < x; System.out.print(x--)) { // valid
 ```
 - any statement after continue or break will cause compiler error Unreachable statement
-- multi-dimensional array initialization
-``` 
-    int[][] ints = new int[3][2];
-    ints[0][3] = 1 // doesn't work
-    ints[2] = new int[]{1, 2, 3, 4, 4}; // this works
-    ints[3] = new int[]{1,2}; // this doesn't work
+- `while(y--<=0) continue;` will eventually break because MIN_VALUE - 1 is MAX_VALUE
 
-    int[][] ccc = new int[][2]; // doesn't work
-```
 
 ## Using operators and decision constructs
 - increment tricks
@@ -243,10 +317,12 @@ System.out.println(i-- + --j);
 ```
 
 ## Inheritance, Interface
-
+- interface variables are implicitly `public static final`
+- all methods in interface (abstract, default, static) are public
 - interface can have static method
 - interface can have default method, overideable
-- subclass can only override with same or looser access
+- overriding method must have with same or looser access
+- subclass constructor, default or custom, always calls super()
 - allowed downcast, ClassCastException:
 
 ```java
@@ -319,7 +395,6 @@ sub: String method()
 ```
 - overriding method cannot throw a checked exception with broader scope that its parent
 - interface can have modifier `abstract`
-- interface variables are implicitly `public static final`
 - subclass can have a method with the same signature with a private method in superclass, but it's not override
 - invoking a method on superclass will call its overriden method regardless of reference
 ``` 
@@ -340,17 +415,47 @@ class B extends A {
 A xx = new B();
 A.bla(); // 2
 ``` 
-- inner class cannot have static declaration
+- inner class cannot have static variable declaration
 - the only way a class with private constructor can be extended is when the subclass is its inner class
 - overloaded method needs to change its arguments (type, order, or more arguments)
+- overloaded method doesn't depend on access modifier or return type
 - overloaded method cannot change its return type, it can do so only if the args also change 
+- subclass must create a constructor for superclass that doesn't have default constructor
+``` 
+class A {
+    A(String s){
+        System.out.println("Constructor A");
+    }
+
+}
+
+class B extends A {
+   B() { 
+     super("ss")'
+   }
+}
+
+```
+- if superclass has a default constructor (no param constructor) then subclass doesn't need to create custom constructor or call super()
+``` 
+class A {
+    A(){
+        System.out.println("Constructor A");
+    }
+
+}
+
+class B extends A {
+}
+
+```
 
 ## Working with Methods and Encapsulation
 - pass by value
 ```
 the original primitive will not change (String is NOT primitive)
 private void change(int t){
-   t = 1o;
+   t = 10;
 }
 
 // the array object will change
@@ -393,6 +498,7 @@ method(x); //ok
 
  div(20,2) // 10.0
 ```
+- overriding method cannot throw new and broader checked exception but it can throw new and broader unchecked exception (like RuntimeException)
 
 ## Handling Exceptions
 - method can throw a superclass of exception that the content throws
@@ -442,20 +548,44 @@ won't work
 - `finally` always executes when try block exits
 - `finally` without catch is legal
 - All exceptions are checked exceptions, except for those indicated by Error, RuntimeException, and their subclasses.
-- Errors and runtime exceptions are collectively known as unchecked exceptions.
+- Errors and runtime exceptions are collectively known as unchecked exceptions.     
+``` 
+OCAJP Unchecked exceptions:
+
+ArrayIndexOutOfBoundsException
+IllegalArgumentException
+NullPointerException
+NumberFormatException
+ExceptionInInitializerError
+StackOverflowError
+
+OCAJP Checked exceptions
+IOException
+FileNotFoundException (subclass of IOException)
+
+```
 - Throwable has two subclasses : Exception and Error (unchecked)
-- SecurityException is not checked exception so no need to handle it in the calling method
 - main method has two kinds of signature, either can be final
 ``` 
 static void main(String[] args)
 static void main(String...args)
 ```
+- `throw` checked exceptions must be passed to `throws`
+``` 
+void method() throws FileNotFoundException, ClassNotFoundException {
+  throws new ClassNotFoundException();
+}
+``` 
+- SecurityException is not checked exception so no need to `throws` it or to handle in the calling method
 - if a method throws an exception then the calling method must handle it 
+
 
 
 ## Java API
 - StringBuilder initial capacity is initial content + 16, unless explicitly declared in constructor
-- List.add(pos, val)
+- List.add(pos, val) returns  true if list changes
+- List.set(pos, el) returns element it replaces
+- List.remove(pos) returns element removed
 - Predicate is interface, its main functional method is `boolean test(T t)`
 - ArrayList.toArray behavior 
 Returns an array containing all of the elements in this list in proper sequence (from first to last element); the runtime type of the returned array is that of the specified array. If the list fits in the specified array, it is returned therein. Otherwise, a new array is allocated with the runtime type of the specified array and the size of this list.
@@ -474,6 +604,12 @@ arr = list.toArray(arr);
 - Integer.max cannot be used to compare Object
 - LocalDate.atTime(int hour, int minute) returns LocalDateTime
 - LocalDate.getMonth return enum like MARCH, LocalDate.getMonthValue returns 3
+- LocalDate.with(TemporalField or ChronoField) returns a copy of the localdate adjusted with chronofield
+``` 
+LocalDate ld = LocalDate.of(2015,12,12)
+ld = ld.with(ChronoField.DAY_OF_YEAR, 30)
+//2015-01-30 or 30th day of the year
+```
 - Period.ofMonths(13).normalized will return normalized form P1Y1M
 - String res = String.concat("aa") will create two objects ("aa", and res)
 - StringBuilder. getChars(int srcBegin, int srcEnd,  char[] dst, int dstBegin) dstBegin is offset in target array
@@ -501,6 +637,17 @@ LocalDate l = y.atMonthDay(MonthDay.of(4,31))
 - String has join method after Java 8
 - ArrayList.retainAll removes all elements that other list has
 - ArrayList.add(index , el) inserts an el, ArrayList.set(index, el) replaces it
+- StringBuilder.delete(start, finish) can have start index(inclusive) at sb.length and finish(exclusive) at sb.length+1 
+- "A".compareTo("B") // -1
+- string sort
+``` 
+String[] a = {"A", "a", "3", "$"};
+Arrays.sort(a);
+// [$, 3, A, a]
+```
+- LocalTime.truncatedTo sets anything that smaller the specified field to zero, so truncating with minutes will set seconds and nanoseconds part to zero
+- truncating LocalTime with HALF_DAYS will set the minutes to zero and set the hours to the latest half day (i.e 12)
+
 
 ## Qs
 - new array with non int size
@@ -513,3 +660,5 @@ LocalDate l = y.atMonthDay(MonthDay.of(4,31))
 ## Easy misses
 - else() doesn't exist
 - variables with the same name in the same method
+- unreachable lines (any lines after break, continue, return)
+- don't be fooled by indentation in if statements without curly brackets, Java doesn't know indentation so check the line against the one on the immediate top
