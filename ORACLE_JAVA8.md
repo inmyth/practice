@@ -47,7 +47,11 @@ class AAA {
 - Integer Integer.`decode(string)` (can accept hex) 
 - Integer Integer.`valueOf(string)`
 - int Integer.`parseInt(String)` 
+- Integer.parseString can only parse decimal string, any leading zeros will be ignored (012) and any format like hex and binary will cause NumberFormatException
 - by default `1.3` is a double, assigning it to float will cause type match error
+- reminderUnsigned(a,b) : reminder, i.e reminderUnsigned(10,9) = 1
+- divideUnsigned(a,b) : quotient, i.e divideUnsigned(61,3) = 20 
+- 
 - final can be init once, doesn't have to be in the same line
 - local method variable has to be init before used, but it's not illegal to decalare it without value
 - new Boolean("true") for true, new Boolean("anything else but not null") for false (this constructor is deprecated after 9)
@@ -144,6 +148,9 @@ exprA | exprB <-- this means evaluate exprA then evaluate exprB then do the |.
 exprA || exprB <-- this means evaluate exprA and only if this is false then evaluate exprB and do the ||
 ```
 - enum constructor can only be default or private 
+- casting int on floating point will only take the integer part
+- char default val is /U000000 which is empty char
+
 
 ## Operators and Decision Construct
 - ++x and x++
@@ -209,6 +216,7 @@ else
   y*=2;
     
 ```
+- `System.out.println("" + 8 -1);` will not work
 
 ## Array
 - array of chars can be filled with int
@@ -237,6 +245,13 @@ a = {1,2,3}
     ints[3] = new int[]{1,2}; // this doesn't work
 
     int[][] ccc = new int[][2]; // doesn't work
+```
+- assigning, casting an array of T to array of T2 won't work
+``` 
+int[] bb = {1,2};
+double[] bbb = bb; // fails
+double[] bbb = (double[])bb; // fails
+
 ```
 
 ## Loop Constructs
@@ -321,7 +336,7 @@ System.out.println(i-- + --j);
 - all methods in interface (abstract, default, static) are public
 - interface can have static method
 - interface can have default method, overideable
-- overriding method must have with same or looser access
+- overriding method be it in abstract class or interface must have same or looser access
 - subclass constructor, default or custom, always calls super()
 - allowed downcast, ClassCastException:
 
@@ -393,7 +408,6 @@ Person p = new Manager();
 super: Object method()
 sub: String method()
 ```
-- overriding method cannot throw a checked exception with broader scope that its parent
 - interface can have modifier `abstract`
 - subclass can have a method with the same signature with a private method in superclass, but it's not override
 - invoking a method on superclass will call its overriden method regardless of reference
@@ -449,6 +463,9 @@ class B extends A {
 }
 
 ```
+- If the superclass method declares an exception, subclass overridden method can declare same, subclass exception or no exception but cannot declare parent exception.
+- If the superclass method does not declare an exception, subclass overridden method cannot declare the checked exception but it can declare unchecked exception.
+
 
 ## Working with Methods and Encapsulation
 - pass by value
@@ -662,3 +679,4 @@ Arrays.sort(a);
 - variables with the same name in the same method
 - unreachable lines (any lines after break, continue, return)
 - don't be fooled by indentation in if statements without curly brackets, Java doesn't know indentation so check the line against the one on the immediate top
+- if a method throws a checked exception, the calling method must handle it

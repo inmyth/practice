@@ -24,24 +24,12 @@ public class OracleCert extends Writer{
     int yy;
        static Integer va;
 
-
-    public static void ae() throws NullPointerException {
-        throw new NullPointerException();
+    public static void ae() throws FileNotFoundException {
     }
 
     public static void write(){System.out.println("Writing code");}
         static Integer in;
     public static void main(String args[]) {
-
-        String[] a = {"A", "a", "3", "$", "."};
-        Arrays.sort(a);
-        System.out.println(Arrays.toString(a));
-
-        int[] aaa= new int[0];
-
-        StringBuilder sb = new StringBuilder("Whiz");
-        sb.delete(5,7);
-        System.out.println(sb);
 
     }
 
@@ -68,21 +56,30 @@ class A {
         System.out.println("Constructor A");
     }
 
-     void method() throws  IOException{
+      void method() throws  FileNotFoundException{
         System.out.print("A");
     }
 
 }
 
-class B extends A {
+class B extends A implements AAA{
 
     B(){
         super();
     }
-     void method() throws FileNotFoundException{
+     void method(){
         System.out.print("B");
     }
 
+    @Override
+    public String getType() {
+        return null;
+    }
+
+    @Override
+    public void par() {
+
+    }
 }
 
 
