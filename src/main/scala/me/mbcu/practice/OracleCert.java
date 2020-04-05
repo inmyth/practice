@@ -30,10 +30,25 @@ public class OracleCert extends Writer{
     public static void write(){System.out.println("Writing code");}
         static Integer in;
     public static void main(String args[]) {
-        float a = 1;
-        System.out.println(Float.isNaN(a / 0));
+
+        System.out.println(A.aint);
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+
+        Integer[] ar = new Integer[5];
+        list.toArray(ar);
+        System.out.println(Arrays.toString(ar));
+
+        StringBuilder sb = new StringBuilder();
+        sb.delete(1, 5);
 
     }
+    static void inc(char c){
+
+    }
+
+    static void inc2(int a){}
 
     static void dob(Double s){
 
@@ -54,6 +69,7 @@ public class OracleCert extends Writer{
 
 class A {
 
+    public static int aint = 0;
     A( ){
         System.out.println("Constructor A");
     }
@@ -61,6 +77,12 @@ class A {
       void method() throws  FileNotFoundException{
         System.out.print("A");
     }
+
+    static {System.out.println("Class A");}
+
+    protected Object bla(){
+        return new Object();
+    };
 
 }
 
@@ -82,6 +104,18 @@ class B extends A implements AAA{
     public void par() {
 
     }
+
+    @Override
+    public void priv() {
+
+    }
+
+    @Override
+    public String bla(){
+        return new String();
+    }
+
+
 }
 
 
@@ -97,6 +131,8 @@ interface AAA {
     }
 
     public void par();
+
+    public void priv();
 
 }
 

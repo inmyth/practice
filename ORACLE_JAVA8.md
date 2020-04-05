@@ -399,7 +399,7 @@ Person p = new Manager();
 - if a class implements two interfaces that have the same default method (name and signature) then compiler will throw an error EXCEPT if the class overrides the duplicate methods
 - order of initiation
 ``` 
-- static variables and static initializers from top, this happend on class loader
+- static variables and static initializers from top, this happened on class loader which means calling some class variable A.x will also call static initializers
 - superclass constructors
 - instance variables and instance initializers from top
 - constructor
@@ -576,6 +576,7 @@ NullPointerException
 NumberFormatException
 ExceptionInInitializerError
 StackOverflowError
+SecurityException 
 
 OCAJP Checked exceptions
 IOException
@@ -603,7 +604,7 @@ void method() throws FileNotFoundException, ClassNotFoundException {
 - StringBuilder initial capacity is initial content + 16, unless explicitly declared in constructor
 - List.add(pos, val) returns  true if list changes
 - List.set(pos, el) returns element it replaces
-- List.remove(pos) returns element removed
+- List.remove(pos) returns element removed, List.remove(object) returns boolean
 - Predicate is interface, its main functional method is `boolean test(T t)`
 - ArrayList.toArray behavior 
 Returns an array containing all of the elements in this list in proper sequence (from first to last element); the runtime type of the returned array is that of the specified array. If the list fits in the specified array, it is returned therein. Otherwise, a new array is allocated with the runtime type of the specified array and the size of this list.
@@ -655,8 +656,8 @@ LocalDate l = y.atMonthDay(MonthDay.of(4,31))
 - String has join method after Java 8
 - ArrayList.retainAll removes all elements that other list has
 - ArrayList.add(index , el) inserts an el, ArrayList.set(index, el) replaces it
-- StringBuilder.delete(start, finish) can have start index(inclusive) at sb.length and finish(exclusive) at sb.length+1 
-- "A".compareTo("B") // -1
+- StringBuilder.delete(start, finish) can have start index(inclusive) at sb.length and finish(exclusive) at any index after
+- "A".compareTo("B") // -1 because A is lower than B
 - string sort
 ``` 
 String[] a = {"A", "a", "3", "$"};
