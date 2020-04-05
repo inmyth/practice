@@ -42,6 +42,7 @@ class AAA {
 ## Data Types
 - `_` can be used in literal numbers with exceptions: the beginning or end, next to decimal point, before l, d, or f 
 - floating point doesn't throw ArithmeticException when divided by zero, it only results in infinity
+- 1.0/0 : Infinity, 0.0/0.0 : NaA
 - `Double.isNan(double)` or `Double.isNan()` on the value
 - Integer `new Integer(string or int)`
 - Integer Integer.`decode(string)` (can accept hex) 

@@ -24,12 +24,14 @@ public class OracleCert extends Writer{
     int yy;
        static Integer va;
 
-    public static void ae() throws FileNotFoundException {
+    public static void ae()  {
     }
 
     public static void write(){System.out.println("Writing code");}
         static Integer in;
     public static void main(String args[]) {
+        float a = 1;
+        System.out.println(Float.isNaN(a / 0));
 
     }
 
