@@ -1,10 +1,8 @@
 package me.mbcu.practice
 
 object ABC extends App{
-  var h = 1
-  h += 1
-  println(h)
 
+  
 //  import scala.collection.mutable.Map
 //  val cache : Map[Long, String] = Map.empty.withDefaultValue("")
 //

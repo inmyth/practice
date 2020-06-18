@@ -11,6 +11,24 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="sbt: org.scala-lang:scala-library:2.13.1:jar" level="project" />
+    <orderEntry type="module-library">
+      <library name="sbt: unmanaged-jars">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/kotlin-reflect-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../lib/kotlin-reflect.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../lib/kotlin-stdlib-jdk7-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../lib/kotlin-stdlib-jdk7.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../lib/kotlin-stdlib-jdk8-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../lib/kotlin-stdlib-jdk8.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../lib/kotlin-stdlib-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../lib/kotlin-stdlib.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../lib/kotlin-test-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../lib/kotlin-test.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="scala-sdk-2.13.2" level="project" />
   </component>
 </module>

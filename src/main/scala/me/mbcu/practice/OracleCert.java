@@ -31,18 +31,7 @@ public class OracleCert extends Writer{
         static Integer in;
     public static void main(String args[]) {
 
-        System.out.println(A.aint);
-        List<Integer> list = new ArrayList<>();
-        list.add(1);
-        list.add(2);
-
-        Integer[] ar = new Integer[5];
-        list.toArray(ar);
-        System.out.println(Arrays.toString(ar));
-
-        StringBuilder sb = new StringBuilder();
-        sb.delete(1, 5);
-
+       int[] a = new int[-1];
     }
     static void inc(char c){
 
@@ -67,9 +56,10 @@ public class OracleCert extends Writer{
     }
 }
 
-class A {
+class A implements AAA {
 
     public static int aint = 0;
+
     A( ){
         System.out.println("Constructor A");
     }
@@ -80,19 +70,39 @@ class A {
 
     static {System.out.println("Class A");}
 
+    @Override
+    public String getType() {
+        return null;
+    }
+
     protected Object bla(){
         return new Object();
-    };
+    }
+
+    @Override
+    public void par() {
+        System.out.println("aa");
+    }
+
+    @Override
+    public void priv() {
+
+    }
+
+    ;
 
 }
 
-class B extends A implements AAA{
+class B extends A implements AAA, ZZZ{
 
     B(){
         super();
     }
      void method(){
         System.out.print("B");
+
+        System.out.println(print());
+        defA();
     }
 
     @Override
@@ -101,7 +111,14 @@ class B extends A implements AAA{
     }
 
     @Override
+    public String print() {
+        return null;
+    }
+
+
+    @Override
     public void par() {
+        System.out.println("bb");
 
     }
 
@@ -123,9 +140,13 @@ interface AAA {
 
     String getType();
 
-      public default String print(){
-        return "";
+    public default String print(){
+        return "default method AAA";
     }
+
+    public default void defA(){
+    }
+
     public static  String bla(){
          return "aaa";
     }
@@ -136,6 +157,11 @@ interface AAA {
 
 }
 
+interface ZZZ {
+    public default String print(){
+        return "default method BBB";
+    }
+}
 
 abstract interface BBB extends AAA {
     static final int a = 1;
